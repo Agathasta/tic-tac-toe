@@ -1,4 +1,5 @@
 # spec/tictactoe_spec.rb
+<<<<<<< HEAD
 
 # to run: bundle exec rspec
 
@@ -23,3 +24,9 @@ end
 
 # 	end
 # end
+=======
+require "tictactoe"
+
+describe TicTacToe do
+end
+>>>>>>> bb820d3f7f5538492eb425a8892586dd167a5bcd
