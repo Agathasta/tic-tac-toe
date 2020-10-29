@@ -11,11 +11,13 @@ class Player
   end
 end
 
+
 class Board
 end
 
 class Game
 end
+
 
 player1 = Player.new
 player2 = Player.new
