@@ -1,5 +1,3 @@
-require 'pry'
-
 class Game # controls the flow of the game
   def initialize
     @board = Board.new
@@ -28,14 +26,17 @@ class Game # controls the flow of the game
   end
 
   def game_over?
-    # winner
-    check_tie
+    check_winner || check_tie
   end
 
-  # winner
-    # if current player has - winning_combination?
-      # message
-    # end
+  def check_winner
+    if @board.winning_combination?(@current_player.token)
+      puts "#{@current_player.name}, YOU WIN!!!!"
+      true
+    else
+      false
+    end
+  end
 
   def check_tie
     if @board.full_board?
@@ -52,6 +53,8 @@ class Game # controls the flow of the game
 end
 
 class Player
+  attr_accessor :name, :token
+
   def initialize(name, token, board)
     @name = name
     @token = token
@@ -86,8 +89,6 @@ class Player
 end
 
 class Board
-  attr_accessor :board
-
   def initialize
     @board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   end
@@ -116,11 +117,23 @@ class Board
     @board[move].class == Integer
   end
 
-  # winning_combination?
-  # end
-
   def full_board?
     @board.all? { |c| c.class == String}
+  end
+
+  def winning_combos
+    [[@board[0], @board[1], @board[2]],
+    [@board[3], @board[4], @board[5]],
+    [@board[6], @board[7], @board[8]],
+    [@board[0], @board[3], @board[6]],
+    [@board[1], @board[4], @board[7]],
+    [@board[2], @board[5], @board[8]],
+    [@board[0], @board[4], @board[8]],
+    [@board[2], @board[4], @board[6]]]
+  end
+
+  def winning_combination?(token)
+    winning_combos.any? { |triplet| triplet.all? { |c| c == token } }
   end
 end
 
