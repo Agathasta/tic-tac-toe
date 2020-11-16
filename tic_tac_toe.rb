@@ -105,18 +105,16 @@ class Board
   end
 
   def add_token(move, token)
-    # if valid_move?
+    if valid_move?(move)
       @board[move] = token
-    # else
-      # message
-    # end
+    else
+      puts "That move is already taken"
+    end
   end
 
-  # valid_move?
-    # !cell available?
-      # display message
-    # end
-  # end
+  def valid_move?(move)
+    @board[move].class == Integer
+  end
 
   # winning_combination?
   # end
