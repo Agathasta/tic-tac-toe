@@ -3,10 +3,19 @@ require 'pry'
 class Game # controls the flow of the game
   def initialize
     @board = Board.new
-    @board.display
     @player_1 = Player.new("Player 1", "X", @board)
     @player_2 = Player.new("Player 2", "O", @board)
     @current_player = @player_1
+    welcome
+  end
+
+  def welcome
+    puts
+    puts "Welcome to exciting Tic Tac Toe"
+    puts "(I am going to assume you know the rules)"
+    puts "This is the board:"
+    @board.display
+    puts "Enjoy!"
   end
 
   def play
@@ -16,9 +25,6 @@ class Game # controls the flow of the game
       break if game_over?
       switch_player
     end
-
-    #@board.display ## just for testin!!
-
   end
 
   def game_over?
@@ -33,7 +39,7 @@ class Game # controls the flow of the game
 
   def check_tie
     if @board.full_board?
-      puts "Ohhhhhh"
+      puts "Ohhhhhh... a tie"
       true
     else
       false
@@ -53,15 +59,14 @@ class Player
   end
 
   def get_move
-    # loop
+    loop do
       move = ask_move
-
-      # if correct_format?
-      @board.add_token(move, @token)
-
-      # break
-    # end
-
+      if correct_format?(move)
+        if @board.add_token(move, @token)
+          break
+        end
+      end
+    end
   end
 
   def ask_move
@@ -70,9 +75,14 @@ class Player
     (gets.chomp.to_i) - 1
   end
 
-  # correct_format?
-    # move = Integer (1..9)
-  # end
+  def correct_format?(move)
+    if (0..8).include?(move)
+      true
+    else
+      puts "Wrong input!"
+      false
+    end
+  end
 end
 
 class Board
