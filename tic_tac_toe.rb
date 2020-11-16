@@ -1,78 +1,74 @@
-=beginn
-
-√ Set game   [GAME]
-  Create board  [BOARD]
-  Create two players  [PLAYER]
-√ Enter game loop   [GAME]
-  Display board  [BOARD]
-  Ask move and validate it  [PLAYER]
-  If game is over   [GAME]
-    Display winner || Tied game message
-    Stop looping
-  Else
-    Switch player and loop  [GAME]
-
-    => 3 Classes: Game, Player, Board
-=end
+require 'pry'
 
 class Game # controls the flow of the game
-  # initialize
-    # - create board
-    # - create players
-    # assign initial player
-  # end
+  def initialize
+    @board = Board.new
+    @board.display
+    @player_1 = Player.new("Player 1", "X", @board)
+    @player_2 = Player.new("Player 2", "O", @board)
+    @current_player = @player_1
+  end
 
-  # play
-    # loop
-      # - display board
-      # - get_move
-      # - add_token
-      # break if game_over?
-      # switch_player
-      # end
-    # end
-  # end
+  def play
+    loop do
+      @current_player.get_move
+      @board.display
+      break if game_over?
+      switch_player
+    end
 
-  # game_over?
+    #@board.display ## just for testin!!
+
+  end
+
+  def game_over?
     # winner
-    # tie
-  # end
+    check_tie
+  end
 
   # winner
     # if current player has - winning_combination?
       # message
     # end
 
-  # tie
-    # if - board_full?
-      # message
-    # end
+  def check_tie
+    if @board.full_board?
+      puts "Ohhhhhh"
+      true
+    else
+      false
+    end
+  end
 
-  # switch_player
-    # 1 <> 2
-  # end
+  def switch_player
+    @current_player == @player_1 ? @current_player = @player_2 : @current_player = @player_1
+  end
 end
 
 class Player
-  # initialize
-    # name
-    # token
-  # end
+  def initialize(name, token, board)
+    @name = name
+    @token = token
+    @board = board
+  end
 
-  # get_move
+  def get_move
     # loop
-      # ask_move
-      # if correct_format?
-        # if - valid_move?
-          # break
-    # end
-    # set coord
-  # end
+      move = ask_move
 
-  # ask_move
-    # message
-    # gets.chomp
-  # end
+      # if correct_format?
+      @board.add_token(move, @token)
+
+      # break
+    # end
+
+  end
+
+  def ask_move
+    puts "#{@name}, choose your move (a number 1 - 9):"
+    print "> "
+    (gets.chomp.to_i) - 1
+  end
 
   # correct_format?
     # move = Integer (1..9)
@@ -80,21 +76,31 @@ class Player
 end
 
 class Board
-  # initialize
-    # board
-  # end
+  attr_accessor :board
 
-  # display
-    # puts board
-  # end
+  def initialize
+    @board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  end
 
-  # add_token
+  def display
+    puts "
+          |-----|-----|-----|
+          |  #{@board[0]}  |  #{@board[1]}  |  #{@board[2]}  |
+          |-----|-----|-----|
+          |  #{@board[3]}  |  #{@board[4]}  |  #{@board[5]}  |
+          |-----|-----|-----|
+          |  #{@board[6]}  |  #{@board[7]}  |  #{@board[8]}  |
+          |-----|-----|-----|
+          "
+  end
+
+  def add_token(move, token)
     # if valid_move?
-      # place token
+      @board[move] = token
     # else
       # message
     # end
-  # end
+  end
 
   # valid_move?
     # !cell available?
@@ -105,6 +111,10 @@ class Board
   # winning_combination?
   # end
 
-  # full_board?
-  # end
+  def full_board?
+    @board.all? { |c| c.class == String}
+  end
 end
+
+game = Game.new
+game.play
