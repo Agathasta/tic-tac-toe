@@ -2,7 +2,7 @@
 
 # gets input from players
 class Player
-  attr_accessor :name, :token
+  attr_reader :name, :token
 
   def initialize(name, token, board)
     @name = name
@@ -17,6 +17,8 @@ class Player
       break if @board.add_token(move, @token)
     end
   end
+
+  private
 
   def ask_move
     puts "#{@name}, choose your move (a number 1 - 9):"

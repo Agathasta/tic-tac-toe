@@ -26,12 +26,18 @@ class Board
     end
   end
 
-  def valid_move?(move)
-    @board[move].instance_of?(Integer)
-  end
-
   def full_board?
     @board.all? { |c| c.instance_of?(String) }
+  end
+
+  def winning_combination?(token)
+    winning_combos.any? { |triplet| triplet.all? { |c| c == token } }
+  end
+
+  private
+
+  def valid_move?(move)
+    @board[move].instance_of?(Integer)
   end
 
   def winning_combos
@@ -43,9 +49,5 @@ class Board
      [@board[2], @board[5], @board[8]],
      [@board[0], @board[4], @board[8]],
      [@board[2], @board[4], @board[6]]]
-  end
-
-  def winning_combination?(token)
-    winning_combos.any? { |triplet| triplet.all? { |c| c == token } }
   end
 end

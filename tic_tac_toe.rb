@@ -13,15 +13,6 @@ class TicTacToe
     welcome
   end
 
-  def welcome
-    puts
-    puts 'Welcome to exciting Tic Tac Toe'
-    puts '(I am going to assume you know the rules)'
-    puts 'This is the board:'
-    @board.display
-    puts 'Enjoy!'
-  end
-
   def play
     loop do
       @current_player.get_move
@@ -30,6 +21,17 @@ class TicTacToe
 
       switch_player
     end
+  end
+
+  private
+
+  def welcome
+    puts
+    puts 'Welcome to exciting Tic Tac Toe'
+    puts '(I am going to assume you know the rules)'
+    puts 'This is the board:'
+    @board.display
+    puts 'Enjoy!'
   end
 
   def game_over?
