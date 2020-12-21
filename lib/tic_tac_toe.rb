@@ -7,8 +7,8 @@ require_relative 'player'
 class TicTacToe
   def initialize
     @board = Board.new
-    @player1 = Player.new('Player 1', 'X', @board)
-    @player2 = Player.new('Player 2', 'O', @board)
+    @player1 = Player.new('Player 1', "\e[36mX\e[0m", @board)
+    @player2 = Player.new('Player 2', "\e[33mO\e[0m", @board)
     @current_player = @player1
     welcome
   end
@@ -26,12 +26,12 @@ class TicTacToe
   private
 
   def welcome
-    puts
-    puts 'Welcome to exciting Tic Tac Toe'
-    puts '(I am going to assume you know the rules)'
-    puts 'This is the board:'
+    puts `clear`
+    puts "\n\e[40m**** Tic Tac Toe Game ****\e[0m"
+    puts "\n\e[37m(I am going to assume you know the rules)\e[0m"
+    puts "\nThis is the board:"
     @board.display
-    puts 'Enjoy!'
+    puts "Enjoy!\n\n"
   end
 
   def game_over?
@@ -40,7 +40,7 @@ class TicTacToe
 
   def check_winner
     if @board.winning_combination?(@current_player.token)
-      puts "#{@current_player.name}, YOU WIN!!!!"
+      puts "\e[34m#{@current_player.name}, YOU WIN!!!!\e[0m"
       true
     else
       false
@@ -49,7 +49,7 @@ class TicTacToe
 
   def check_tie
     if @board.full_board?
-      puts 'Ohhhhhh... a tie'
+      puts "\e[34mOhhhhhh... a tie\e[0m"
       true
     else
       false

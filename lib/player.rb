@@ -30,7 +30,7 @@ class Player
     if (0..8).include?(move)
       true
     else
-      puts 'Wrong input!'
+      puts "\e[31mWrong input!\e[0m"
       false
     end
   end

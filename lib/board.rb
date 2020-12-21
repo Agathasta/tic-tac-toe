@@ -22,7 +22,7 @@ class Board
     if valid_move?(move)
       @board[move] = token
     else
-      puts 'That move is already taken'
+      puts "\e[31mThat move is already taken\e[0m"
     end
   end
 
